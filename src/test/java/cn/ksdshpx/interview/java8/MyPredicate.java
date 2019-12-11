@@ -7,6 +7,7 @@ package cn.ksdshpx.interview.java8;
  * Time: 15:55
  * Description:
  */
+@FunctionalInterface
 public interface MyPredicate<T> {
     public boolean test(T t);
 }
