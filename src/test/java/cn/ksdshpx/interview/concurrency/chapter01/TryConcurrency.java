@@ -21,24 +21,24 @@ public class TryConcurrency {
 
     private static void readDataFromDB() {
         try {
-            print("Begin Read Data From DB");
-            Thread.sleep(1000*50L);
-            print("Finish Read Data and Begin Handle it");
+            print(Thread.currentThread().getName() + "==>Begin Read Data From DB");
+            Thread.sleep(1000*5L);
+            print(Thread.currentThread().getName() + "==>Finish Read Data and Begin Handle it");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        print("Finish Read Data From DB");
+        print(Thread.currentThread().getName() + "==>Finish Read Data From DB");
     }
 
     private static void writeDataToFile() {
         try {
-            print("Begin Write Data To File");
-            Thread.sleep(1000*50L);
-            print("Finish Write Data and Begin Handle it");
+            print(Thread.currentThread().getName() + "==>Begin Write Data To File");
+            Thread.sleep(1000*5L);
+            print(Thread.currentThread().getName() + "==>Finish Write Data and Begin Handle it");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        print("Finish Write Data To File");
+        print(Thread.currentThread().getName() + "==>Finish Write Data To File");
     }
 
     private static void print(String message) {
