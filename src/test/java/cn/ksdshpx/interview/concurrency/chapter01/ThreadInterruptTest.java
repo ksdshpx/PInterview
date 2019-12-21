@@ -14,11 +14,12 @@ public class ThreadInterruptTest {
         Thread t = new Thread() {
             @Override
             public void run() {
-                while (true){
+                while (!Thread.currentThread().isInterrupted()){
                     try {
                         TimeUnit.SECONDS.sleep(1);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
+                        Thread.currentThread().interrupt();
                     }
                 }
             }
