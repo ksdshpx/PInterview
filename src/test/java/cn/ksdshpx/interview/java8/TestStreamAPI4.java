@@ -26,14 +26,14 @@ public class TestStreamAPI4 {
 
     /**
      * 1.查找与匹配
-     * ①allMatch:检查是否匹配所有元素
-     * ②anyMatch:检查是否至少匹配一个元素
-     * ③noneMatch:检查是否没有匹配所有元素
-     * ④findFirst:返回第一个元素
-     * ⑤findAny:返回流中的任意元素
-     * ⑥count:返回流中的元素总个数
-     * ⑦max:返回流中的最大值
-     * ⑧min:返回流中的最小值
+     * ①boolean allMatch(Predicate<? super T> predicate):检查是否匹配所有元素
+     * ②boolean anyMatch(Predicate<? super T> predicate):检查是否至少匹配一个元素
+     * ③boolean noneMatch(Predicate<? super T> predicate:检查是否没有匹配所有元素
+     * ④Optional<T> findFirst():返回第一个元素
+     * ⑤Optional<T> findAny():返回流中的任意元素
+     * ⑥long count():返回流中的元素总个数
+     * ⑦Optional<T> max(Comparator<? super T> comparator):返回流中的最大值
+     * ⑧Optional<T> min(Comparator<? super T> comparator):返回流中的最小值
      */
 
     @Test
