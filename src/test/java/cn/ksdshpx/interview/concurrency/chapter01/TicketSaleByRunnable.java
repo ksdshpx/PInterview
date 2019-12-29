@@ -9,17 +9,24 @@ import java.util.concurrent.TimeUnit;
  * Time: 21:52
  * Description:模拟银行叫号
  */
-public class TicketSaleByRunnable implements Runnable{
+public class TicketSaleByRunnable implements Runnable {
     private int saledTicket = 1;
-    private final int TICKET_MAX_COUNT = 50;
+    private final int TICKET_MAX_COUNT = 500;
+    private final Object MONITOR = new Object();
+
     @Override
     public void run() {
-        while(saledTicket <= 50){
-            System.out.println(Thread.currentThread().getName() + ":"+(saledTicket++));
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        while (true) {
+            synchronized (MONITOR) {
+                if (saledTicket > TICKET_MAX_COUNT) {
+                    break;
+                }
+                try {
+                    TimeUnit.MILLISECONDS.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread().getName() + ":" + (saledTicket++));
             }
         }
     }
