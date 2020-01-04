@@ -1,6 +1,7 @@
 package cn.ksdshpx.interview.concurrency.chapter01;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -21,7 +22,17 @@ import java.util.concurrent.CopyOnWriteArraySet;
  */
 public class NotSafeDemo {
     public static void main(String[] args) {
-        setNotSafe();
+        mapNotSafe();
+    }
+
+    private static void mapNotSafe() {
+        Map<String,String> map = new ConcurrentHashMap<>();
+        for (int i = 1; i <= 30; i++) {
+            new Thread(() -> {
+                map.put(Thread.currentThread().getName(), UUID.randomUUID().toString().substring(0, 8));
+                System.out.println(map);
+            }, String.valueOf(i)).start();
+        }
     }
 
     private static void setNotSafe() {
