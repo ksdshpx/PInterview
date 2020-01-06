@@ -3,6 +3,8 @@ package cn.ksdshpx.interview.java8;
 import org.junit.Test;
 
 import java.time.*;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -10,9 +12,9 @@ import java.util.concurrent.TimeUnit;
  * Create by peng.xing
  * Date: 2020/1/3
  * Time: 10:24
- * Description:本地时间与时间戳
+ * Description:Java8日期时间API
  */
-public class TestLocalDateTime {
+public class TestNewDateAPI {
     //1.LocalDate LocalTime LocalDateTime
     @Test
     public void test01() {
@@ -71,5 +73,28 @@ public class TestLocalDateTime {
         LocalDate endLocalDate = LocalDate.now();
         Period period = Period.between(startLocalDate, endLocalDate);
         System.out.println(period.getYears() + ":" + period.getMonths() + ":" + period.getDays());
+    }
+
+    @Test
+    public void test04(){
+        LocalDateTime ldt = LocalDateTime.now();
+        System.out.println(ldt);
+        LocalDateTime ldt2 = ldt.withDayOfMonth(10);
+        System.out.println(ldt2);
+        LocalDateTime ldt3 = ldt.with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
+        System.out.println(ldt3);
+        //自定义:下一个工作日
+        LocalDateTime ldt5 = ldt.with((t) -> {
+            LocalDateTime ldt4 = (LocalDateTime) t;
+            DayOfWeek dayOfWeek = ldt4.getDayOfWeek();
+            if (dayOfWeek.equals(DayOfWeek.FRIDAY)) {
+                return ldt4.plusDays(3);
+            } else if (dayOfWeek.equals(DayOfWeek.SATURDAY)) {
+                return ldt4.plusDays(2);
+            } else {
+                return ldt4.plusDays(1);
+            }
+        });
+        System.out.println(ldt5);
     }
 }
