@@ -1,6 +1,7 @@
 package cn.ksdshpx.interview.juc;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Create with IntelliJ IDEA
@@ -20,6 +21,11 @@ class MyData {
     public void addPlusPlus() {
         number++;
     }
+
+    AtomicInteger atomicInteger = new AtomicInteger();
+    public void addAtomic(){
+        atomicInteger.getAndIncrement();
+    }
 }
 
 /**
@@ -32,6 +38,10 @@ class MyData {
  * 不可分割，完整性，也即某个线程正在做某个业务的时候，中间不可以被加塞或者被分割，需要整体完整，
  * 要么同时成功，要么同时失败。
  * 2.2volatile不保证原子性的案例演示
+ * 2.3why
+ * 2.4如何解决原子性
+ *    *加synchronized锁
+ *    *使用juc下的AtomicInteger
  */
 public class VolatileDemo {
     public static void main(String[] args) {
@@ -40,6 +50,7 @@ public class VolatileDemo {
             new Thread(() -> {
                 for (int j = 1; j <= 1000 ; j++) {
                     data.addPlusPlus();
+                    data.addAtomic();
                 }
             }, String.valueOf(i)).start();
         }
@@ -48,7 +59,8 @@ public class VolatileDemo {
             Thread.yield();
         }
 
-        System.out.println(Thread.currentThread().getName() + "\t finally number value:" + data.number);
+        System.out.println(Thread.currentThread().getName() + "\tint type,finally number value:" + data.number);
+        System.out.println(Thread.currentThread().getName() + "\tatomicInteger type,finally number value:" + data.atomicInteger);
     }
 
     //volatile可以保证可见性，及时通知其他线程，主物理内存的值已经被修改
